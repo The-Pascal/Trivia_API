@@ -30,14 +30,12 @@ class Question(db.Model):
   answer = Column(String)
   category = Column(String)
   difficulty = Column(Integer)
-  rating = Column(Integer)  #a small attempt to add rating also
 
-  def __init__(self, question, answer, category, difficulty , rating):
+  def __init__(self, question, answer, category, difficulty ):
     self.question = question
     self.answer = answer
     self.category = category
     self.difficulty = difficulty
-    self.rating = rating
 
   def insert(self):
     db.session.add(self)
@@ -56,8 +54,7 @@ class Question(db.Model):
       'question': self.question,
       'answer': self.answer,
       'category': self.category,
-      'difficulty': self.difficulty,
-      'rating':self.rating
+      'difficulty': self.difficulty
     }
 
 '''

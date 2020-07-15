@@ -116,8 +116,7 @@ GET "/questions?page=1"
             "category": 3, 
             "difficulty": 2, 
             "id": 15, 
-            "question": "The Taj Mahal is located in which Indian city?",
-            "rating": 5
+            "question": "The Taj Mahal is located in which Indian city?"
             }
         ], 
         "totalQuestions": 18
@@ -131,7 +130,6 @@ POST "/questions"
     answer: Answer statement
     category: Category ID
     difficulty: Difficulty Level
-    rating: Rating
 
 - Returns :
     
@@ -143,7 +141,6 @@ POST "/questions"
             "answer": "added answer",
             "category": 1,
             "difficulty": 1,
-            "rating": 5
         }
         ,
         "success": True
@@ -176,8 +173,7 @@ POST "/search"
         "question": "This is searched question",
         "answer": "let this is answer",
         "category": 1,
-        "difficulty": 1,
-        "rating": 5
+        "difficulty": 1
     }
     }
 
@@ -194,8 +190,7 @@ POST "/quiz"
         "question": "",
         "answer": "",
         "category": 1,
-        "difficulty": 1,
-        "rating": 5
+        "difficulty": 1
     }
     }
 

@@ -48,6 +48,7 @@ def create_app(test_config=None):
     endpoint to handle GET requests
     for categories.
     '''
+    #working fine
     @app.route('/categories', methods=['GET'])
     def fetch_all_available_categories():
         all_categories = query_all_function(Category)
@@ -91,9 +92,9 @@ def create_app(test_config=None):
     @app.route('/questions/<int:id>', methods=['DELETE'])
     def specific_question_deletion(id):
 
-        question = query_all_function(Question)
+        question = Question.query.filter(Question.id==id)
 
-        if (len(question)==0):
+        if not question:
             return abort(404)
         else:
             question.delete()
@@ -118,12 +119,11 @@ def create_app(test_config=None):
         new_answer = request.json.get('answer')
         new_category = request.json.get('category')
         new_difficulty = request.json.get('difficulty')
-        new_rating = request.json.get('rating')
 
-        if not (new_question and new_answer and new_category and new_difficulty and new_rating):
+        if not (new_question and new_answer and new_category and new_difficulty ):
             return abort(400)
 
-        framed_question = Question(new_question, new_answer, new_category, new_difficulty, new_rating)
+        framed_question = Question(new_question, new_answer, new_category, new_difficulty)
 
         framed_question.insert()
 
@@ -194,7 +194,7 @@ def create_app(test_config=None):
 
         quiz_category = request.json.get('quiz_category')
 
-        if (len(quiz_category)<=0):
+        if not quiz_category:
             return abort(400)
 
         found_category_id = quiz_category.get('id')
@@ -218,8 +218,7 @@ def create_app(test_config=None):
     Function to search questions and return founded questions
     '''
     def fun_to_search(term_to_be_searched):
-        going_to_search = Question.question.like('%{term_to_be_searched}%')
-        questions_found = Question.query.filter(going_to_search).all()
+        questions_found = Question.query.filter(Question.question.ilike('%{term_to_be_searched}%')).all()
         return questions_found
 
     '''
@@ -239,7 +238,7 @@ def create_app(test_config=None):
 
         questions_found = fun_to_search(term_to_be_searched)
 
-        if len(questions_found) == 0:
+        if questions_found == None:
                 abort(404)
 
         return jsonify({
