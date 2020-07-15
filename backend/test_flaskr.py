@@ -75,7 +75,8 @@ class TriviaTestCase(unittest.TestCase):
             'question' : 'Who was the lead in Iron Man movie?',
             'answer': 'Robert Downey',
             'difficulty': 2,
-            'category': 4
+            'category': 4,
+            'rating': 5
         }
         res = self.client().post("/questions", json=new_question)
         data = json.loads(res.data)
@@ -83,13 +84,14 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
-    # TEST for 400 error missing argument
+    # TEST for 400 error missing argument. Here, category is missing
     def test_400_new_question_missing_argument(self):
 
         new_question = {
             'question' : 'Who was the lead in Iron Man movie?',
             'answer': 'Robert Downey',
-            'difficulty': 2
+            'difficulty': 2,
+            'rating': 5
         }
         res = self.client().post("/questions", json=new_question)
         data = json.loads(res.data)
@@ -124,7 +126,7 @@ class TriviaTestCase(unittest.TestCase):
     def test_404_question_not_found(self):
 
         json_search_term = {
-            'searchTerm': 'hello'
+            'searchTerm': 'This is going to find this search string but is not contained in any question'
         }
         res = self.client().post("/search", json=json_search_term)
         data = json.loads(res.data)
@@ -149,8 +151,8 @@ class TriviaTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 404)
 
-    # TEST for quizzes
-    def test_for_quizzes(self):
+    # TEST for quiz
+    def test_for_quiz(self):
 
         json_quiz= {
             'previous_questions' : [10,12,15],
@@ -159,20 +161,20 @@ class TriviaTestCase(unittest.TestCase):
                 'id' : '1'
                 }
         } 
-        res = self.client().post('/quizzes', json = json_quiz)
+        res = self.client().post('/quiz', json = json_quiz)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['success'])
         self.assertTrue(len(data['question'])>0)
 
-    # TEST for quizzes without quiz_category
+    # TEST for quiz without quiz_category
     def test_400_quiz_category_not_given(self):
 
         json_quiz = {
-            'previous_questions' : [10,12,15]            
+            'previous_questions' : [1,12,7]            
         }
-        res = self.client().post('/quizzes', json = json_quiz)
+        res = self.client().post('/quiz', json = json_quiz)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 400)

@@ -71,11 +71,11 @@ REVIEW_COMMENT
 This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
 
 Endpoints
-GET '/categories'
-GET "/questions?page=1"
-POST "/questions"
-DELETE "/questions/int:id"
-POST "/search"
+GET '/categories' - used to get all categories
+GET "/questions?page=1" - used to get paginated questions
+POST "/questions" - used to add more questions
+DELETE "/questions/int:id" - used to delete a specific question
+POST "/search" - used to search questions
 
 GET '/categories'
 - Fetches a dictionary of categories in which the main key is category and the value to it contains another dictionary where there are key:value pairs whose ids and the value is the corresponding string of the category
@@ -96,7 +96,8 @@ key:value pairs.
 
 GET "/questions?page=1"
 - Fetches questions to be displayed on page using page number and also paginate questions according to requirement
-- Request Arguments: page= Page no.
+- Request Arguments: Present
+    page= Page no.
 - Returns:
     questions: List of questions with pagination
     categories: Dictionary of Category ID:Category Type
@@ -115,7 +116,8 @@ GET "/questions?page=1"
             "category": 3, 
             "difficulty": 2, 
             "id": 15, 
-            "question": "The Taj Mahal is located in which Indian city?"
+            "question": "The Taj Mahal is located in which Indian city?",
+            "rating": 5
             }
         ], 
         "totalQuestions": 18
@@ -123,40 +125,45 @@ GET "/questions?page=1"
 
 POST "/questions"
 - Adds a new question to the database
-- Request Arguments:
+- Request Arguments: present
+
     question: Question statement
     answer: Answer statement
     category: Category ID
     difficulty: Difficulty Level
--Response Body:
-    question: Question object that is created
-{
-    {
-  "added Question": {
-    "id": 1,
-    "question": "",
-    "answer": "",
-    "category": 1,
-    "difficulty": 1
-  }
-  ,
-  "success": True
-}
+    rating: Rating
+
+- Returns :
+    
+        {
+            {
+        "added Question": {
+            "id": 1,
+            "question": "Here this question is added",
+            "answer": "added answer",
+            "category": 1,
+            "difficulty": 1,
+            "rating": 5
+        }
+        ,
+        "success": True
+        }
 
 DELETE "/questions/int:id"
-- Used to delete a question
-- Request Parameters: id: Question ID needed to be deleted
-- Response Body:
-    deleted: Question ID that is deleted
+- Used to delete a specific question
+- Request Parameters: Present
+     id: Question ID needed to be deleted
+- Returns :
 
     {
-        "deleted":2
+        "deleted":2,
+        "success": True
     }
 
 
 POST "/search"
-- Fetches questions based on the search term
-- Request Arguments:
+- Fetches questions based on the search term and retuns them
+- Request Arguments: Present
     searchTerm: Search term
 - Response Body:
     questions: json response of all the questions found with similar search term
@@ -166,20 +173,20 @@ POST "/search"
     {
     "questions": {
         "id": 1,
-        "question": "",
-        "answer": "",
+        "question": "This is searched question",
+        "answer": "let this is answer",
         "category": 1,
-        "difficulty": 1
+        "difficulty": 1,
+        "rating": 5
     }
     }
 
-POST "/quizzes"
-- Show random questions based on selected categories.
-- Request Arguments:
+POST "/quiz"
+- Show random questions based on selected categories and also list of previous questions.
+- Request Arguments: Present
     previous_questions: List of previously answered questions
     quiz_category = List of all selected categories
-- Response:
-    question: Random question based on selected categories
+- Returns:
 
     {
     "question": {
@@ -187,7 +194,8 @@ POST "/quizzes"
         "question": "",
         "answer": "",
         "category": 1,
-        "difficulty": 1
+        "difficulty": 1,
+        "rating": 5
     }
     }
 
